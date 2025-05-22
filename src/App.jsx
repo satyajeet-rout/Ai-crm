@@ -1447,7 +1447,7 @@ const HomePage = () => {
         {/* Avatar and greeting */}
         <div className="text-center mb-12">
           
-          <img  src=".././public/assets/images/cosmic-ball.png" alt="User Avatar" className="rounded-full w-20 h-20 mb-4 mx-auto" />
+          {/* <img  src=".././public/assets/images/cosmic-ball.png" alt="User Avatar" className="rounded-full w-20 h-20 mb-4 mx-auto" /> */}
           <h1 className="text-2xl font-medium text-gray-800 mb-2">Good Evening, Kunal</h1>
           <p className="text-gray-500 text-base">Enter a simple prompt to generate anything you want !</p>
         </div>
