@@ -1054,7 +1054,7 @@
 
 
 import React, { useState } from 'react';
-import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, FileText, Settings, Link, ArrowLeft, Mail, Phone, MapPin, Calendar, Edit, Trash2, Star, Clock, Mic, Send, MoreHorizontal, AlertCircle, CheckCircle2, Circle, BookOpen, X } from 'lucide-react';
+import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, FileText, Settings, Link, ArrowLeft, Mail, Phone, MapPin, Calendar, Edit, Trash2, Star, Clock, Mic, Send, MoreHorizontal, AlertCircle, CheckCircle2, Circle, BookOpen, X, Paperclip, Image, MessageCircle } from 'lucide-react';
 
 // Task Modal Component
 const TaskModal = ({ isOpen, onClose, task, onSave, contacts }) => {
@@ -1420,83 +1420,112 @@ const NoteModal = ({ isOpen, onClose, note, onSave, contacts }) => {
   );
 };
 
-// Home Component
+
 const HomePage = () => {
   const [query, setQuery] = useState('');
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
-  const exampleQueries = [
+  const recentChats = [
     {
-      icon: "🔍",
-      text: "Show me all contacts living in Berlin"
+      title: "Show me all contacts living in Berlin",
+      timeAgo: "6 Hours"
     },
     {
-      icon: "📊",
-      text: "My last touch points with Lukas"
+      title: "My last touch points with Lukas",
+      timeAgo: "12 Hours"
     },
     {
-      icon: "🎯",
-      text: "Who in my network is an SaaS expert"
-    },
-    {
-      icon: "👤",
-      text: "Add www.linkedin.com/in/sina-sadegh"
+      title: "Who in my network is an SaaS expert",
+      timeAgo: "18 Hours"
     }
   ];
 
   return (
-    <div className="flex-1 flex flex-col bg-gray-50">
-      <div className="p-6">
-        <h1 className="text-2xl font-semibold text-gray-900 mb-12">Home</h1>
+    <div className="flex-1 flex flex-col min-h-screen bg-gray-50 overflow-auto">
+      <div className="flex-1 flex flex-col items-center justify-center px-8 py-16">
         
-        <div className="max-w-2xl mx-auto mt-20">
-          <div className="text-center mb-8">
-            <h2 className="text-4xl font-medium text-gray-800 mb-4">
-              Interact with your CRM
-            </h2>
-          </div>
+        {/* Avatar and greeting */}
+        <div className="text-center mb-12">
+          
+          <img  src=".././public/assets/images/cosmic-ball.png" alt="User Avatar" className="rounded-full w-20 h-20 mb-4 mx-auto" />
+          <h1 className="text-2xl font-medium text-gray-800 mb-2">Good Evening, Kunal</h1>
+          <p className="text-gray-500 text-base">Enter a simple prompt to generate anything you want !</p>
+        </div>
 
-          {/* Search Input */}
-          <div className="relative mb-8">
-            <input
-              type="text"
-              placeholder="Ask anything..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              className="w-full px-4 py-4 pr-20 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 text-gray-700 placeholder-gray-400"
-            />
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
-              <button className="p-2 text-gray-400 hover:text-gray-600">
-                <Clock className="w-4 h-4" />
-              </button>
-              <button className="p-2 text-gray-400 hover:text-gray-600">
-                <Mic className="w-4 h-4" />
-              </button>
-              <button className="p-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+        {/* Main input area */}
+        <div className="w-full max-w-3xl">
+          <div className={`bg-white rounded-2xl border shadow-sm p-6 mb-12 transition-all duration-200 ${
+            isInputFocused 
+              ? 'border-purple-300 shadow-lg ring-2 ring-purple-100' 
+              : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
+          }`}>
+            {/* Input header */}
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-2 text-gray-600">
                 <Send className="w-4 h-4" />
-              </button>
+                <span className="text-sm font-medium">Ask whatever you want</span>
+              </div>
+              <div className="flex items-center space-x-1 text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full">
+                <span>🌐</span>
+                <span>All Web</span>
+              </div>
+            </div>
+
+            {/* Large textarea */}
+            <div className="mb-6">
+              <textarea
+                placeholder="Type your question here..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                onFocus={() => setIsInputFocused(true)}
+                onBlur={() => setIsInputFocused(false)}
+                className="w-full h-10 text-base bg-transparent border-none resize-none focus:outline-none text-gray-800 placeholder-gray-400"
+              />
+            </div>
+
+            {/* Bottom toolbar */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4">
+                <button className="flex items-center space-x-2 text-gray-500 hover:text-purple-600 text-sm transition-colors">
+                  <Paperclip className="w-4 h-4" />
+                  <span>Add Attachment</span>
+                </button>
+                <button className="flex items-center space-x-2 text-gray-500 hover:text-purple-600 text-sm transition-colors">
+                  <Image className="w-4 h-4" />
+                  <span>Use Image</span>
+                </button>
+              </div>
+              <div className="flex items-center space-x-3">
+                <span className="text-gray-400 text-sm">{query.length}/1000</span>
+                <button className={`w-8 h-8 bg-purple-600 text-white rounded-lg hover:bg-purple-700 flex items-center justify-center transition-all ${
+                  query.length > 0 ? 'scale-110 shadow-md' : ''
+                }`}>
+                  <Send className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
+        </div>
 
-          {/* Example Queries */}
-          <div className="grid grid-cols-2 gap-3 mb-6">
-            {exampleQueries.map((example, index) => (
-              <button
+        {/* Recent chats section */}
+        <div className="w-full max-w-6xl">
+          <h2 className="text-xl font-medium text-gray-800 mb-6">Your recents chats</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {recentChats.map((chat, index) => (
+              <div
                 key={index}
-                onClick={() => setQuery(example.text)}
-                className="flex items-center space-x-3 p-4 bg-white border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-sm transition-all text-left"
+                className="bg-white rounded-xl border border-gray-200 p-6 hover:border-purple-300 hover:shadow-lg transition-all duration-200 cursor-pointer transform hover:-translate-y-1"
               >
-                <span className="text-lg">{example.icon}</span>
-                <span className="text-gray-700 text-sm">{example.text}</span>
-              </button>
+                <div className="flex items-start space-x-3">
+                  <MessageCircle className="w-5 h-5 text-gray-400 mt-1 flex-shrink-0" />
+                  <div className="flex-1">
+                    <h3 className="text-gray-800 font-medium leading-snug mb-3">{chat.title}</h3>
+                    <p className="text-gray-500 text-sm">{chat.timeAgo}</p>
+                  </div>
+                </div>
+              </div>
             ))}
-          </div>
-
-          {/* More Examples Button */}
-          <div className="text-center">
-            <button className="inline-flex items-center space-x-2 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900">
-              <Plus className="w-4 h-4" />
-              <span>More examples</span>
-            </button>
           </div>
         </div>
       </div>
@@ -2663,9 +2692,553 @@ const NotesPage = () => {
 };
 
 // Sidebar Component
+// const Sidebar = ({ activeView, setActiveView }) => {
+//   return (
+//     <div className="w-64 bg-[#FBFAFF] border-r border-gray-200 flex flex-col">
+//       {/* User Profile */}
+//       <div className="p-4 border-b border-gray-200">
+//         <div className="flex items-center space-x-3">
+//           <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+//             <span className="text-sm">👨</span>
+//           </div>
+//           <span className="text-gray-600 font-medium">Kunal</span>
+//         </div>
+//       </div>
+
+//       {/* Search */}
+//       <div className="p-4">
+//         <div className="relative">
+//           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+//           <input
+//             type="text"
+//             placeholder="Search..."
+//             onClick={() => setActiveView('search')}
+//             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer"
+//             readOnly
+//           />
+//           <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs">
+//             ⌘↵
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* New Person Button */}
+//       <div className="px-4 mb-4">
+//         <button className="w-full bg-gray-900 text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-gray-800">
+//           <Plus className="w-4 h-4" />
+//           <span>New person</span>
+//         </button>
+//       </div>
+
+//       {/* Navigation */}
+//       <nav className="flex-1 px-4">
+//         <div className="space-y-1">
+//           <button 
+//             onClick={() => setActiveView('home')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'home' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <Home className="w-5 h-5" />
+//             <span>Home</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('contacts')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'contacts' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <Users className="w-5 h-5" />
+//             <span>Contacts</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('notifications')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'notifications' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <Bell className="w-5 h-5" />
+//             <span>Notification</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('tasks')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'tasks' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <CheckSquare className="w-5 h-5" />
+//             <span>Tasks</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('notes')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'notes' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <FileText className="w-5 h-5" />
+//             <span>Notes</span>
+//           </button>
+//         </div>
+//       </nav>
+
+//       {/* Bottom Navigation */}
+//       <div className="p-4 border-t border-gray-200">
+//         <div className="space-y-1">
+//           <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+//             <Link className="w-5 h-5" />
+//             <span>Integration</span>
+//           </button>
+//           <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+//             <Settings className="w-5 h-5" />
+//             <span>Settings</span>
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+
+// Updated Sidebar Component
+// const Sidebar = ({ activeView, setActiveView }) => {
+//   // Sample chat history - you can move this to parent component state
+//   const [chatHistory] = useState([
+//     {
+//       id: 1,
+//       title: "Show me all contacts living in Berlin",
+//       timeAgo: "6 Hours",
+//       lastMessage: "Found 23 contacts in Berlin area..."
+//     },
+//     {
+//       id: 2,
+//       title: "My last touch points with Lukas",
+//       timeAgo: "12 Hours",
+//       lastMessage: "Your last interaction was via email..."
+//     },
+//     {
+//       id: 3,
+//       title: "Who in my network is an SaaS expert",
+//       timeAgo: "18 Hours",
+//       lastMessage: "Found 8 SaaS experts in your network..."
+//     },
+//     {
+//       id: 4,
+//       title: "Add www.linkedin.com/in/sina-sadegh",
+//       timeAgo: "1 day",
+//       lastMessage: "Contact added successfully..."
+//     },
+//     {
+//       id: 5,
+//       title: "Schedule meeting with investors",
+//       timeAgo: "2 days",
+//       lastMessage: "Available time slots for next week..."
+//     }
+//   ]);
+
+//   return (
+//     <div className="w-64 bg-[#FBFAFF] border-r border-gray-200 flex flex-col">
+//       {/* User Profile */}
+//       <div className="p-4 border-b border-gray-200">
+//         <div className="flex items-center space-x-3">
+//           <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+//             <span className="text-sm">👨</span>
+//           </div>
+//           <span className="text-gray-600 font-medium">Kunal</span>
+//         </div>
+//       </div>
+
+//       {/* Search */}
+//       <div className="p-4">
+//         <div className="relative">
+//           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+//           <input
+//             type="text"
+//             placeholder="Search..."
+//             onClick={() => setActiveView('search')}
+//             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer"
+//             readOnly
+//           />
+//           <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs">
+//             ⌘↵
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* New Person Button */}
+//       <div className="px-4 mb-4">
+//         <button className="w-full bg-gray-900 text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-gray-800">
+//           <Plus className="w-4 h-4" />
+//           <span>New person</span>
+//         </button>
+//       </div>
+
+//       {/* Navigation */}
+//       <nav className="flex-1 px-4 overflow-y-auto">
+//         <div className="space-y-1 mb-6">
+//           <button 
+//             onClick={() => setActiveView('home')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'home' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <Home className="w-5 h-5" />
+//             <span>Home</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('contacts')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'contacts' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <Users className="w-5 h-5" />
+//             <span>Contacts</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('notifications')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'notifications' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <Bell className="w-5 h-5" />
+//             <span>Notification</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('tasks')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'tasks' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <CheckSquare className="w-5 h-5" />
+//             <span>Tasks</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('notes')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'notes' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <FileText className="w-5 h-5" />
+//             <span>Notes</span>
+//           </button>
+//         </div>
+
+//         {/* Chats Section */}
+//         <div className="mb-6 overflow-y-auto">
+//           <div className="flex items-center justify-between mb-3">
+//             <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Recent Chats</h3>
+//             <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full text-xs font-medium">
+//               {chatHistory.length}
+//             </span>
+//           </div>
+//           <div className="space-y-1">
+//             {chatHistory.slice(0, 5).map((chat) => (
+//               <button
+//                 key={chat.id}
+//                 onClick={() => setActiveView('home')} // Navigate to home or specific chat view
+//                 className="w-full text-left p-2 rounded-lg hover:bg-gray-100 transition-colors group"
+//               >
+//                 <div className="flex items-start space-x-2">
+//                   <MessageCircle className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+//                   <div className="min-w-0 flex-1">
+//                     <p className="text-xs font-medium text-gray-700 line-clamp-2 leading-tight mb-1">
+//                       {chat.title}
+//                     </p>
+//                     <div className="flex items-center justify-between">
+//                       <p className="text-xs text-gray-500 truncate flex-1 mr-1">
+//                         {chat.lastMessage}
+//                       </p>
+//                       <span className="text-xs text-gray-400 whitespace-nowrap">
+//                         {chat.timeAgo}
+//                       </span>
+//                     </div>
+//                   </div>
+//                 </div>
+//               </button>
+//             ))}
+//           </div>
+          
+//           {chatHistory.length > 5 && (
+//             <button 
+//               onClick={() => setActiveView('chats')}
+//               className="w-full mt-2 text-xs text-gray-500 hover:text-gray-700 text-center py-1"
+//             >
+//               View all chats ({chatHistory.length})
+//             </button>
+//           )}
+//         </div>
+//       </nav>
+
+//       {/* Bottom Navigation */}
+//       <div className="p-4 border-t border-gray-200">
+//         <div className="space-y-1">
+//           <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+//             <Link className="w-5 h-5" />
+//             <span>Integration</span>
+//           </button>
+//           <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+//             <Settings className="w-5 h-5" />
+//             <span>Settings</span>
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+// Updated Sidebar Component
+// const Sidebar = ({ activeView, setActiveView }) => {
+//   // Sample chat history - you can move this to parent component state
+//   const [chatHistory, setChatHistory] = useState([
+//     {
+//       id: 1,
+//       title: "Show me all contacts living in Berlin",
+//       timeAgo: "6 Hours",
+//       lastMessage: "Found 23 contacts in Berlin area..."
+//     },
+//     {
+//       id: 2,
+//       title: "My last touch points with Lukas",
+//       timeAgo: "12 Hours",
+//       lastMessage: "Your last interaction was via email..."
+//     },
+//     {
+//       id: 3,
+//       title: "Who in my network is an SaaS expert",
+//       timeAgo: "18 Hours",
+//       lastMessage: "Found 8 SaaS experts in your network..."
+//     },
+//     {
+//       id: 4,
+//       title: "Add www.linkedin.com/in/sina-sadegh",
+//       timeAgo: "1 day",
+//       lastMessage: "Contact added successfully..."
+//     },
+//     {
+//       id: 5,
+//       title: "Schedule meeting with investors",
+//       timeAgo: "2 days",
+//       lastMessage: "Available time slots for next week..."
+//     }
+//   ]);
+
+//   const handleDeleteChat = (chatId, e) => {
+//     e.stopPropagation(); // Prevent triggering the chat click
+//     if (window.confirm('Are you sure you want to delete this chat?')) {
+//       setChatHistory(chatHistory.filter(chat => chat.id !== chatId));
+//     }
+//   };
+
+//   return (
+//     <div className="w-64 bg-[#FBFAFF] border-r border-gray-200 flex flex-col">
+//       {/* User Profile */}
+//       <div className="p-4 border-b border-gray-200">
+//         <div className="flex items-center space-x-3">
+//           <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+//             <span className="text-sm">👨</span>
+//           </div>
+//           <span className="text-gray-600 font-medium">Kunal</span>
+//         </div>
+//       </div>
+
+//       {/* Search */}
+//       <div className="p-4">
+//         <div className="relative">
+//           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+//           <input
+//             type="text"
+//             placeholder="Search..."
+//             onClick={() => setActiveView('search')}
+//             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer"
+//             readOnly
+//           />
+//           <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs">
+//             ⌘↵
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* New Person Button */}
+//       <div className="px-4 mb-4">
+//         <button className="w-full bg-gray-900 text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-gray-800">
+//           <Plus className="w-4 h-4" />
+//           <span>New person</span>
+//         </button>
+//       </div>
+
+//       {/* Navigation */}
+//       <nav className="flex-1 px-4 overflow-y-auto">
+//         <div className="space-y-1 mb-6">
+//           <button 
+//             onClick={() => setActiveView('home')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'home' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <Home className="w-5 h-5" />
+//             <span>Home</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('contacts')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'contacts' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <Users className="w-5 h-5" />
+//             <span>Contacts</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('notifications')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'notifications' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <Bell className="w-5 h-5" />
+//             <span>Notification</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('tasks')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'tasks' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <CheckSquare className="w-5 h-5" />
+//             <span>Tasks</span>
+//           </button>
+//           <button 
+//             onClick={() => setActiveView('notes')}
+//             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//               activeView === 'notes' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//             }`}
+//           >
+//             <FileText className="w-5 h-5" />
+//             <span>Notes</span>
+//           </button>
+//         </div>
+
+//         {/* Chats Section */}
+//         <div className="mb-6">
+//           <div className="flex items-center justify-between mb-3">
+//             <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Recent Chats</h3>
+//             <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full text-xs font-medium">
+//               {chatHistory.length}
+//             </span>
+//           </div>
+//           <div className="space-y-1">
+//             {chatHistory.slice(0, 5).map((chat) => (
+//               <div
+//                 key={chat.id}
+//                 className="group relative"
+//               >
+//                 <button
+//                   onClick={() => setActiveView('home')} // Navigate to home or specific chat view
+//                   className="w-full text-left p-2 rounded-lg hover:bg-gray-100 transition-colors"
+//                 >
+//                   <div className="flex items-start space-x-2">
+//                     <MessageCircle className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+//                     <div className="min-w-0 flex-1 pr-6"> {/* Added pr-6 to make space for delete button */}
+//                       <p className="text-xs font-medium text-gray-700 line-clamp-2 leading-tight mb-1">
+//                         {chat.title}
+//                       </p>
+//                       <div className="flex items-center justify-between">
+//                         <p className="text-xs text-gray-500 truncate flex-1 mr-1">
+//                           {chat.lastMessage}
+//                         </p>
+//                         <span className="text-xs text-gray-400 whitespace-nowrap">
+//                           {chat.timeAgo}
+//                         </span>
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </button>
+                
+//                 {/* Delete Button */}
+//                 <button
+//                   onClick={(e) => handleDeleteChat(chat.id, e)}
+//                   className="absolute top-2 right-2 p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded opacity-0 group-hover:opacity-100 transition-all duration-200"
+//                   title="Delete chat"
+//                 >
+//                   <X className="w-3 h-3" />
+//                 </button>
+//               </div>
+//             ))}
+//           </div>
+          
+//           {chatHistory.length > 5 && (
+//             <button 
+//               onClick={() => setActiveView('chats')}
+//               className="w-full mt-2 text-xs text-gray-500 hover:text-gray-700 text-center py-1"
+//             >
+//               View all chats ({chatHistory.length})
+//             </button>
+//           )}
+//         </div>
+//       </nav>
+
+//       {/* Bottom Navigation */}
+//       <div className="p-4 border-t border-gray-200">
+//         <div className="space-y-1">
+//           <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+//             <Link className="w-5 h-5" />
+//             <span>Integration</span>
+//           </button>
+//           <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+//             <Settings className="w-5 h-5" />
+//             <span>Settings</span>
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+
+// Updated Sidebar Component
 const Sidebar = ({ activeView, setActiveView }) => {
+  // Sample chat history - you can move this to parent component state
+  const [chatHistory, setChatHistory] = useState([
+    {
+      id: 1,
+      title: "Show me all contacts living in Berlin",
+      timeAgo: "6 Hours",
+      lastMessage: "Found 23 contacts in Berlin area..."
+    },
+    {
+      id: 2,
+      title: "My last touch points with Lukas",
+      timeAgo: "12 Hours",
+      lastMessage: "Your last interaction was via email..."
+    },
+    {
+      id: 3,
+      title: "Who in my network is an SaaS expert",
+      timeAgo: "18 Hours",
+      lastMessage: "Found 8 SaaS experts in your network..."
+    },
+    {
+      id: 4,
+      title: "Add www.linkedin.com/in/sina-sadegh",
+      timeAgo: "1 day",
+      lastMessage: "Contact added successfully..."
+    },
+    {
+      id: 5,
+      title: "Schedule meeting with investors",
+      timeAgo: "2 days",
+      lastMessage: "Available time slots for next week..."
+    }
+  ]);
+
+  const handleDeleteChat = (chatId, e) => {
+    e.stopPropagation(); // Prevent triggering the chat click
+    if (window.confirm('Are you sure you want to delete this chat?')) {
+      setChatHistory(chatHistory.filter(chat => chat.id !== chatId));
+    }
+  };
+
   return (
-    <div className="w-64 bg-white border-r border-gray-200 flex flex-col">
+    <div className="w-64 bg-[#FBFAFF] border-r border-gray-200 flex flex-col">
       {/* User Profile */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center space-x-3">
@@ -2694,20 +3267,20 @@ const Sidebar = ({ activeView, setActiveView }) => {
       </div>
 
       {/* New Person Button */}
-      <div className="px-4 mb-4">
+      {/* <div className="px-4 mb-4">
         <button className="w-full bg-gray-900 text-white py-2 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-gray-800">
           <Plus className="w-4 h-4" />
           <span>New person</span>
         </button>
-      </div>
+      </div> */}
 
       {/* Navigation */}
-      <nav className="flex-1 px-4">
-        <div className="space-y-1">
+      <nav className="flex-1 px-4 overflow-y-auto">
+        <div className="space-y-1 mb-6">
           <button 
             onClick={() => setActiveView('home')}
             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
-              activeView === 'home' ? 'bg-gray-100 text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              activeView === 'home' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
             <Home className="w-5 h-5" />
@@ -2716,7 +3289,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
           <button 
             onClick={() => setActiveView('contacts')}
             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
-              activeView === 'contacts' ? 'bg-gray-100 text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              activeView === 'contacts' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
             <Users className="w-5 h-5" />
@@ -2725,7 +3298,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
           <button 
             onClick={() => setActiveView('notifications')}
             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
-              activeView === 'notifications' ? 'bg-gray-100 text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              activeView === 'notifications' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
             <Bell className="w-5 h-5" />
@@ -2734,7 +3307,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
           <button 
             onClick={() => setActiveView('tasks')}
             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
-              activeView === 'tasks' ? 'bg-gray-100 text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              activeView === 'tasks' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
             <CheckSquare className="w-5 h-5" />
@@ -2743,12 +3316,70 @@ const Sidebar = ({ activeView, setActiveView }) => {
           <button 
             onClick={() => setActiveView('notes')}
             className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
-              activeView === 'notes' ? 'bg-gray-100 text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              activeView === 'notes' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
             }`}
           >
             <FileText className="w-5 h-5" />
             <span>Notes</span>
           </button>
+        </div>
+
+        {/* Chats Section */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Recent Chats</h3>
+            <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full text-xs font-medium">
+              {chatHistory.length}
+            </span>
+          </div>
+          <div className="space-y-1">
+            {chatHistory.slice(0, 5).map((chat) => (
+              <div
+                key={chat.id}
+                className="group relative"
+              >
+                <button
+                  onClick={() => setActiveView('home')} // Navigate to home and render HomePage component
+                  className="w-full text-left p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                >
+                  <div className="flex items-start space-x-2">
+                    <MessageCircle className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                    <div className="min-w-0 flex-1 pr-6"> {/* Added pr-6 to make space for delete button */}
+                      <p className="text-xs font-medium text-gray-700 line-clamp-2 leading-tight mb-1">
+                        {chat.title}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-gray-500 truncate flex-1 mr-1">
+                          {chat.lastMessage}
+                        </p>
+                        <span className="text-xs text-gray-400 whitespace-nowrap">
+                          {chat.timeAgo}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+                
+                {/* Delete Button */}
+                <button
+                  onClick={(e) => handleDeleteChat(chat.id, e)}
+                  className="absolute top-2 right-2 p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded opacity-0 group-hover:opacity-100 transition-all duration-200"
+                  title="Delete chat"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </div>
+            ))}
+          </div>
+          
+          {chatHistory.length > 5 && (
+            <button 
+              onClick={() => setActiveView('chats')}
+              className="w-full mt-2 text-xs text-gray-500 hover:text-gray-700 text-center py-1"
+            >
+              View all chats ({chatHistory.length})
+            </button>
+          )}
         </div>
       </nav>
 
@@ -2768,7 +3399,6 @@ const Sidebar = ({ activeView, setActiveView }) => {
     </div>
   );
 };
-
 const ContactsList = ({ onContactClick }) => {
   const contacts = [
     // Today section
@@ -3282,7 +3912,7 @@ const App = () => {
     }
     
     if (activeView === 'search') {
-      return <SearchResults />;
+      return <HomePage />;
     }
     
     if (activeView === 'contacts') {
