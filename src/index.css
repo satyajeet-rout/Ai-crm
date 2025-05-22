@@ -1,0 +1,4 @@
+@import "tailwindcss";
+.premium-blur {
+    filter: blur(4px);
+}
