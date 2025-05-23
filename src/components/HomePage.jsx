@@ -1864,7 +1864,7 @@ const HomePage = ({ onGmailSetup, onLogout }) => {
         
         <div className="text-center mb-12">
           <h1 className="text-2xl font-medium text-gray-800 mb-2">Good Evening, Kunal</h1>
-          <p className="text-gray-500 text-base">Enter a simple prompt to generate anything you want!</p>
+          <p className="text-gray-500 text-base">Enter a Keyword to get anything from your mail!</p>
           
           {authenticatedEmail ? (
             <div className="flex items-center justify-center space-x-4 mt-2">
@@ -1898,8 +1898,8 @@ const HomePage = ({ onGmailSetup, onLogout }) => {
               : 'border-gray-200 hover:border-gray-300 hover:shadow-md'
           }`}>
             <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-2 text-gray-600">
-                <Send className="w-4 h-4" />
+              <div className="flex items-center space-x-2 bg-purple-200 px-2 rounded-xl text-gray-600">
+                {/* <Send className="w-4 h-4" /> */}
                 <span className="text-sm font-medium">Ask whatever you want</span>
               </div>
               <div className="flex items-center space-x-1 text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full">
@@ -1910,7 +1910,7 @@ const HomePage = ({ onGmailSetup, onLogout }) => {
 
             <div className="mb-6">
               <textarea
-                placeholder={authenticatedEmail ? "Type your question here..." : "Please authenticate your email first..."}
+                placeholder={authenticatedEmail ? "Type your Keyword here..." : "Please authenticate your email first..."}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onFocus={() => setIsInputFocused(true)}
