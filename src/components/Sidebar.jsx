@@ -1,180 +1,417 @@
-
-
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Home, LogOut } from 'lucide-react';
+import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, FileText, Settings, Link, ArrowLeft, Mail, Phone, MapPin, Calendar, Edit, Trash2, Star, Clock, Mic, Send, MoreHorizontal, AlertCircle, CheckCircle2, Circle, BookOpen, X, Paperclip, Image, MessageCircle } from 'lucide-react';
 
-const Sidebar = ({ activeView, onNavigate, onLogout }) => {
-  const [workspaceExpanded, setWorkspaceExpanded] = useState(true);
 
-  const toggleWorkspace = () => {
-    setWorkspaceExpanded(!workspaceExpanded);
+
+// const Sidebar = ({ activeView, setActiveView }) => {
+//     const [chatHistory, setChatHistory] = useState([
+//       {
+//         id: 1,
+//         title: "Show me all contacts living in Berlin",
+//         timeAgo: "6 Hours",
+//         lastMessage: "Found 23 contacts in Berlin area..."
+//       },
+//       {
+//         id: 2,
+//         title: "My last touch points with Lukas",
+//         timeAgo: "12 Hours",
+//         lastMessage: "Your last interaction was via email..."
+//       },
+//       {
+//         id: 3,
+//         title: "Who in my network is an SaaS expert",
+//         timeAgo: "18 Hours",
+//         lastMessage: "Found 8 SaaS experts in your network..."
+//       },
+//       {
+//         id: 4,
+//         title: "Add www.linkedin.com/in/sina-sadegh",
+//         timeAgo: "1 day",
+//         lastMessage: "Contact added successfully..."
+//       },
+//       {
+//         id: 5,
+//         title: "Schedule meeting with investors",
+//         timeAgo: "2 days",
+//         lastMessage: "Available time slots for next week..."
+//       }
+//     ]);
+  
+//     const handleDeleteChat = (chatId, e) => {
+//       e.stopPropagation();
+//       if (window.confirm('Are you sure you want to delete this chat?')) {
+//         setChatHistory(chatHistory.filter(chat => chat.id !== chatId));
+//       }
+//     };
+  
+//     return (
+//       <div className="w-64 bg-[#FBFAFF] border-r border-gray-200 flex flex-col h-full">
+//         {/* User Profile */}
+//         <div className="p-4 border-b border-gray-200">
+//           <div className="flex items-center space-x-3">
+//             <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+//               <span className="text-sm">👨</span>
+//             </div>
+//             <span className="text-gray-600 font-medium">Kunal</span>
+//           </div>
+//         </div>
+  
+//         {/* Search */}
+//         <div className="p-4">
+//           <div className="relative">
+//             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+//             <input
+//               type="text"
+//               placeholder="Search..."
+//               onClick={() => setActiveView('search')}
+//               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer"
+//               readOnly
+//             />
+//             <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs">
+//               ⌘↵
+//             </div>
+//           </div>
+//         </div>
+  
+//         {/* Navigation */}
+//         <nav className="flex flex-col flex-1 overflow-hidden">
+//           <div className="px-4 space-y-1 mb-6">
+//             <button 
+//               onClick={() => setActiveView('home')}
+//               className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//                 activeView === 'home' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//               }`}
+//             >
+//               <Home className="w-5 h-5" />
+//               <span>Home</span>
+//             </button>
+//             <button 
+//               onClick={() => setActiveView('contacts')}
+//               className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//                 activeView === 'contacts' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//               }`}
+//             >
+//               <Users className="w-5 h-5" />
+//               <span>Contacts</span>
+//             </button>
+//             <button 
+//               onClick={() => setActiveView('notifications')}
+//               className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//                 activeView === 'notifications' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//               }`}
+//             >
+//               <Bell className="w-5 h-5" />
+//               <span>Notification</span>
+//             </button>
+//             <button 
+//               onClick={() => setActiveView('tasks')}
+//               className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//                 activeView === 'tasks' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//               }`}
+//             >
+//               <CheckSquare className="w-5 h-5" />
+//               <span>Tasks</span>
+//             </button>
+//             <button 
+//               onClick={() => setActiveView('notes')}
+//               className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//                 activeView === 'notes' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//               }`}
+//             >
+//               <FileText className="w-5 h-5" />
+//               <span>Notes</span>
+//             </button>
+//           </div>
+  
+//           {/* Chats Section */}
+//           <div className="flex items-center justify-between mb-3 px-4">
+//               <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Recent Chats</h3>
+//               <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full text-xs font-medium">
+//                 {chatHistory.length}
+//               </span>
+//             </div>
+//           <div className="flex-1 px-4 mb-6 overflow-y-auto">
+//             {/* <div className="flex items-center justify-between mb-3">
+//               <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Recent Chats</h3>
+//               <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full text-xs font-medium">
+//                 {chatHistory.length}
+//               </span>
+//             </div> */}
+//             <div className="space-y-1">
+//               {chatHistory.slice(0, 5).map((chat) => (
+//                 <div
+//                   key={chat.id}
+//                   className="group relative"
+//                 >
+//                   <button
+//                     onClick={() => setActiveView('home')}
+//                     className="w-full text-left p-2 rounded-lg hover:bg-gray-100 transition-colors"
+//                   >
+//                     <div className="flex items-start space-x-2">
+//                       <MessageCircle className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+//                       <div className="min-w-0 flex-1 pr-6">
+//                         <p className="text-xs font-medium text-gray-700 line-clamp-2 leading-tight mb-1">
+//                           {chat.title}
+//                         </p>
+//                         <div className="flex items-center justify-between">
+//                           <p className="text-xs text-gray-500 truncate flex-1 mr-1">
+//                             {chat.lastMessage}
+//                           </p>
+//                           <span className="text-xs text-gray-400 whitespace-nowrap">
+//                             {chat.timeAgo}
+//                           </span>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   </button>
+                  
+//                   {/* Delete Button */}
+//                   <button
+//                     onClick={(e) => handleDeleteChat(chat.id, e)}
+//                     className="absolute top-2 right-2 p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded opacity-0 group-hover:opacity-100 transition-all duration-200"
+//                     title="Delete chat"
+//                   >
+//                     <X className="w-3 h-3" />
+//                   </button>
+//                 </div>
+//               ))}
+//             </div>
+            
+//             {chatHistory.length > 5 && (
+//               <button 
+//                 onClick={() => setActiveView('chats')}
+//                 className="w-full mt-2 text-xs text-gray-500 hover:text-gray-700 text-center py-1"
+//               >
+//                 View all chats ({chatHistory.length})
+//               </button>
+//             )}
+//           </div>
+//         </nav>
+  
+//         {/* Bottom Navigation */}
+//         <div className="p-4 border-t border-gray-200">
+//           <div className="space-y-1">
+//             <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+//               <Link className="w-5 h-5" />
+//               <span>Integration</span>
+//             </button>
+//             <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+//               <Settings className="w-5 h-5" />
+//               <span>Settings</span>
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     );
+// };
+  
+
+
+const Sidebar = ({ activeView, setActiveView }) => {
+    const [chatHistory, setChatHistory] = useState([
+      {
+        id: 1,
+        title: "Show me all contacts living in Berlin",
+        timeAgo: "6 Hours",
+        lastMessage: "Found 23 contacts in Berlin area..."
+      },
+      {
+        id: 2,
+        title: "My last touch points with Lukas",
+        timeAgo: "12 Hours",
+        lastMessage: "Your last interaction was via email..."
+      },
+      {
+        id: 3,
+        title: "Who in my network is an SaaS expert",
+        timeAgo: "18 Hours",
+        lastMessage: "Found 8 SaaS experts in your network..."
+      },
+      {
+        id: 4,
+        title: "Add www.linkedin.com/in/sina-sadegh",
+        timeAgo: "1 day",
+        lastMessage: "Contact added successfully..."
+      },
+      {
+        id: 5,
+        title: "Schedule meeting with investors",
+        timeAgo: "2 days",
+        lastMessage: "Available time slots for next week..."
+      }
+    ]);
+  
+    const handleDeleteChat = (chatId, e) => {
+      e.stopPropagation();
+      if (window.confirm('Are you sure you want to delete this chat?')) {
+        setChatHistory(chatHistory.filter(chat => chat.id !== chatId));
+      }
+    };
+  
+    return (
+      <div className="w-64 bg-[#FBFAFF] border-r border-gray-200 flex flex-col h-full">
+        {/* User Profile */}
+        <div className="p-4 border-b border-gray-200">
+          <div className="flex items-center space-x-3">
+            <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
+              <span className="text-sm">👨</span>
+            </div>
+            <span className="text-gray-600 font-medium">Kunal</span>
+          </div>
+        </div>
+  
+        {/* Search */}
+        <div className="p-4">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+            <input
+              type="text"
+              placeholder="Search..."
+              onClick={() => setActiveView('search')}
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent cursor-pointer"
+              readOnly
+            />
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs">
+              ⌘↵
+            </div>
+          </div>
+        </div>
+  
+        {/* Navigation */}
+        <nav className="flex flex-col flex-1 overflow-hidden">
+          <div className="px-4 space-y-1 mb-6">
+            <button 
+              onClick={() => setActiveView('home')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+                activeView === 'home' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <Home className="w-5 h-5" />
+              <span>Home</span>
+            </button>
+            <button 
+              onClick={() => setActiveView('contacts')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+                activeView === 'contacts' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <Users className="w-5 h-5" />
+              <span>Contacts</span>
+            </button>
+            <button 
+              onClick={() => setActiveView('notifications')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+                activeView === 'notifications' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <Bell className="w-5 h-5" />
+              <span>Notification</span>
+            </button>
+            <button 
+              onClick={() => setActiveView('tasks')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+                activeView === 'tasks' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <CheckSquare className="w-5 h-5" />
+              <span>Tasks</span>
+            </button>
+            <button 
+              onClick={() => setActiveView('notes')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+                activeView === 'notes' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <FileText className="w-5 h-5" />
+              <span>Notes</span>
+            </button>
+          </div>
+  
+          {/* Chats Section */}
+          <div className="flex items-center justify-between mb-3 px-4">
+              <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Recent Chats</h3>
+              <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full text-xs font-medium">
+                {chatHistory.length}
+              </span>
+            </div>
+          <div className="flex-1 px-4 mb-6 overflow-y-auto">
+            <div className="space-y-1">
+              {chatHistory.slice(0, 5).map((chat) => (
+                <div
+                  key={chat.id}
+                  className="group relative"
+                >
+                  <button
+                    onClick={() => setActiveView('home')}
+                    className="w-full text-left p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  >
+                    <div className="flex items-start space-x-2">
+                      <MessageCircle className="w-4 h-4 text-gray-400 mt-0.5 flex-shrink-0" />
+                      <div className="min-w-0 flex-1 pr-6">
+                        <p className="text-xs font-medium text-gray-700 line-clamp-2 leading-tight mb-1">
+                          {chat.title}
+                        </p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-xs text-gray-500 truncate flex-1 mr-1">
+                            {chat.lastMessage}
+                          </p>
+                          <span className="text-xs text-gray-400 whitespace-nowrap">
+                            {chat.timeAgo}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                  
+                  {/* Delete Button */}
+                  <button
+                    onClick={(e) => handleDeleteChat(chat.id, e)}
+                    className="absolute top-2 right-2 p-1 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded opacity-0 group-hover:opacity-100 transition-all duration-200"
+                    title="Delete chat"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                </div>
+              ))}
+            </div>
+            
+            {chatHistory.length > 5 && (
+              <button 
+                onClick={() => setActiveView('chats')}
+                className="w-full mt-2 text-xs text-gray-500 hover:text-gray-700 text-center py-1"
+              >
+                View all chats ({chatHistory.length})
+              </button>
+            )}
+          </div>
+        </nav>
+  
+        {/* Bottom Navigation */}
+        <div className="p-4 border-t border-gray-200">
+          <div className="space-y-1">
+            <button 
+              onClick={() => setActiveView('gmail')}
+              className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+                activeView === 'gmail' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+              }`}
+            >
+              <div className="w-5 h-5 flex items-center justify-center">
+                {/* <svg className="w-5 h-5 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h3.819v.545L12 10.455l6.545-6.089v-.545h3.819c.904 0 1.636.732 1.636 1.636Z"/>
+                </svg> */}
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/1920px-Gmail_icon_%282020%29.svg.png" alt="Gmail Icon" className="w-12 text-white" />
+              </div>
+              <span>Gmail</span>
+            </button>
+            <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
+              <Settings className="w-5 h-5" />
+              <span>Settings</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   };
 
-  return (
-    <div className="w-64 bg-gray-50 border-r border-gray-200 h-screen overflow-y-auto shadow-sm flex flex-col pt-6">
-      {/* Home Item */}
-      <div 
-        className={`mx-3 px-4 py-3 flex items-center cursor-pointer rounded-lg transition-all duration-200 ${
-          activeView === 'home' 
-            ? 'bg-indigo-50 text-indigo-700 shadow-sm border-l-4 border-indigo-500' 
-            : 'text-gray-600 hover:bg-gray-100'
-        }`}
-        onClick={() => onNavigate && onNavigate('home')}
-      >
-        <div className="w-6 flex items-center justify-center mr-3">
-          <Home size={18} />
-        </div>
-        <span className="font-medium">Home</span>
-      </div>
-      
-      {/* My Workflows Item */}
-      <div 
-        className={`mx-3 mt-2 px-4 py-3 flex items-center cursor-pointer rounded-lg transition-all duration-200 ${
-          activeView === 'myWorkflows' 
-            ? 'bg-indigo-50 text-indigo-700 shadow-sm border-l-4 border-indigo-500' 
-            : 'text-gray-600 hover:bg-gray-100'
-        }`}
-        onClick={() => onNavigate && onNavigate('myWorkflows')}
-      >
-        <div className="w-6 flex items-center justify-center mr-3">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-          </svg>
-        </div>
-        <span className="font-medium">My Workflows</span>
-      </div>
-      
-      {/* Workspace Item with submenu */}
-      <div className="mt-2 mx-3">
-        {/* Clickable workspace header */}
-        <div 
-          className={`px-4 py-3 flex items-center justify-between cursor-pointer rounded-lg transition-all duration-200 ${
-            ['main', 'actuals', 'cash', 'headcount', 'reports'].includes(activeView) 
-              ? 'bg-indigo-50 text-indigo-700 shadow-sm border-l-4 border-indigo-500' 
-              : 'text-gray-600 hover:bg-gray-100'
-          }`}
-          onClick={toggleWorkspace}
-        >
-          <div className="flex items-center">
-            <div className="w-6 flex items-center justify-center mr-3">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
-              </svg>
-            </div>
-            <span className="font-medium">Workspace</span>
-          </div>
-          {workspaceExpanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
-        </div>
-        
-        {/* Submenu items with smooth animation */}
-        <div className={`mt-1 overflow-hidden transition-all duration-300 ${workspaceExpanded ? 'max-h-96' : 'max-h-0'}`}>
-          <div className="ml-4 mr-2 mb-2 bg-gray-100 rounded-lg p-2 border-l-2 border-indigo-200">
-            <div 
-              className={`pl-4 pr-3 py-2 flex items-center cursor-pointer rounded-lg transition-all duration-200 whitespace-nowrap ${
-                activeView === 'actuals' 
-                  ? 'bg-indigo-100 text-indigo-700 shadow-sm border-l-2 border-indigo-400' 
-                  : 'text-gray-600 hover:bg-indigo-50'
-              }`}
-              onClick={() => onNavigate && onNavigate('actuals')}
-            >
-              <span className="truncate">Cash-Flow Projection</span>
-            </div>
-            
-            <div 
-              className={`mt-1 pl-4 pr-3 py-2 flex items-center cursor-pointer rounded-lg transition-all duration-200 whitespace-nowrap ${
-                activeView === 'cash' 
-                  ? 'bg-indigo-100 text-indigo-700 shadow-sm border-l-2 border-indigo-400' 
-                  : 'text-gray-600 hover:bg-indigo-50'
-              }`}
-              onClick={() => onNavigate && onNavigate('cash')}
-            >
-              <span className="truncate">AR/AP Aging</span>
-            </div>
-            
-            <div 
-              className={`mt-1 pl-4 pr-3 py-2 flex items-center cursor-pointer rounded-lg transition-all duration-200 whitespace-nowrap ${
-                activeView === 'headcount' 
-                  ? 'bg-indigo-100 text-indigo-700 shadow-sm border-l-2 border-indigo-400' 
-                  : 'text-gray-600 hover:bg-indigo-50'
-              }`}
-              onClick={() => onNavigate && onNavigate('headcount')}
-            >
-              <span className="truncate">Variances vs Budget</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Divider */}
-      <div className="my-4 mx-6 border-t border-gray-200"></div>
-      
-      {/* Dashboards Item */}
-      <div 
-        className={`mx-3 px-4 py-3 flex items-center cursor-pointer rounded-lg transition-all duration-200 ${
-          activeView === 'dashboards' 
-            ? 'bg-indigo-50 text-indigo-700 shadow-sm border-l-4 border-indigo-500' 
-            : 'text-gray-600 hover:bg-gray-100'
-        }`}
-        onClick={() => onNavigate && onNavigate('dashboards')}
-      >
-        <div className="w-6 flex items-center justify-center mr-3">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-          </svg>
-        </div>
-        <span className="font-medium">Dashboards</span>
-      </div>
-      
-      {/* My Reports Item */}
-      <div 
-        className={`mx-3 mt-2 px-4 py-3 flex items-center cursor-pointer rounded-lg transition-all duration-200 ${
-          activeView === 'myReports' 
-            ? 'bg-indigo-50 text-indigo-700 shadow-sm border-l-4 border-indigo-500' 
-            : 'text-gray-600 hover:bg-gray-100'
-        }`}
-        onClick={() => onNavigate && onNavigate('myReports')}
-      >
-        <div className="w-6 flex items-center justify-center mr-3">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-          </svg>
-        </div>
-        <span className="font-medium">My Reports</span>
-      </div>
-      
-      {/* Configuration Item */}
-      <div 
-        className={`mx-3 mt-2 px-4 py-3 flex items-center cursor-pointer rounded-lg transition-all duration-200 ${
-          activeView === 'configuration' 
-            ? 'bg-indigo-50 text-indigo-700 shadow-sm border-l-4 border-indigo-500' 
-            : 'text-gray-600 hover:bg-gray-100'
-        }`}
-        onClick={() => onNavigate && onNavigate('configuration')}
-      >
-        <div className="w-6 flex items-center justify-center mr-3">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-        </div>
-        <span className="font-medium">Configuration</span>
-      </div>
-      
-      {/* Spacer to push logout button to bottom */}
-      <div className="flex-grow"></div>
-      
-      {/* Logout Button */}
-      <div className="mx-3 mb-6 px-4 py-3">
-        <button
-          className="w-full flex items-center  py-2 px-4 bg-red-200 text-red-700 hover:bg-red-400 hover:text-black rounded-lg transition-all duration-200"
-          onClick={() => onLogout && onLogout()}
-        >
-          <LogOut size={18} className="mr-2" />
-          <span className="font-medium">Logout</span>
-        </button>
-      </div>
-    </div>
-  );
-};
 
 export default Sidebar;
