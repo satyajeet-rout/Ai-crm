@@ -11662,9 +11662,9 @@ const HomePage = ({ onGmailSetup, onLogout }) => {
                 {/* Right Side Buttons */}
                 <div className="flex items-center space-x-2">
                   {/* Mic Button */}
-                  <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors shadow-sm">
+                  {/* <button className="w-8 h-8 bg-white rounded-full flex items-center justify-center hover:bg-gray-50 transition-colors shadow-sm">
                     <span className="text-gray-600 text-sm">🎤</span>
-                  </button>
+                  </button> */}
 
                   {/* Send/Action Button */}
                   <button 
