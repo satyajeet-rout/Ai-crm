@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
-import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, FileText, Settings, Link, ArrowLeft, Mail, Phone, MapPin, Calendar, Edit, Trash2, Star, Clock, Mic, Send, MoreHorizontal, AlertCircle, CheckCircle2, Circle, BookOpen, X, Paperclip, Image, MessageCircle } from 'lucide-react';
+// import React, { useState } from 'react';
+// import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, FileText, Settings, Link, ArrowLeft, Mail, Phone, MapPin, Calendar, Edit, Trash2, Star, Clock, Mic, Send, MoreHorizontal, AlertCircle, CheckCircle2, Circle, BookOpen, X, Paperclip, Image, MessageCircle } from 'lucide-react';
+
+
+
 
 
 
@@ -131,12 +134,6 @@ import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, File
 //               </span>
 //             </div>
 //           <div className="flex-1 px-4 mb-6 overflow-y-auto">
-//             {/* <div className="flex items-center justify-between mb-3">
-//               <h3 className="text-xs font-medium text-gray-500 uppercase tracking-wider">Recent Chats</h3>
-//               <span className="bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full text-xs font-medium">
-//                 {chatHistory.length}
-//               </span>
-//             </div> */}
 //             <div className="space-y-1">
 //               {chatHistory.slice(0, 5).map((chat) => (
 //                 <div
@@ -191,9 +188,19 @@ import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, File
 //         {/* Bottom Navigation */}
 //         <div className="p-4 border-t border-gray-200">
 //           <div className="space-y-1">
-//             <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
-//               <Link className="w-5 h-5" />
-//               <span>Integration</span>
+//             <button 
+//               onClick={() => setActiveView('gmail')}
+//               className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
+//                 activeView === 'gmail' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+//               }`}
+//             >
+//               <div className="w-5 h-5 flex items-center justify-center">
+//                 {/* <svg className="w-5 h-5 text-red-500" viewBox="0 0 24 24" fill="currentColor">
+//                   <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h3.819v.545L12 10.455l6.545-6.089v-.545h3.819c.904 0 1.636.732 1.636 1.636Z"/>
+//                 </svg> */}
+//                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/1920px-Gmail_icon_%282020%29.svg.png" alt="Gmail Icon" className="w-12 text-white" />
+//               </div>
+//               <span>Gmail</span>
 //             </button>
 //             <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
 //               <Settings className="w-5 h-5" />
@@ -203,9 +210,14 @@ import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, File
 //         </div>
 //       </div>
 //     );
-// };
-  
+//   };
 
+
+// export default Sidebar;
+
+
+import React, { useState } from 'react';
+import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, FileText, Settings, Link, ArrowLeft, Mail, Phone, MapPin, Calendar, Edit, Trash2, Star, Clock, Mic, Send, MoreHorizontal, AlertCircle, CheckCircle2, Circle, BookOpen, X, Paperclip, Image, MessageCircle } from 'lucide-react';
 
 const Sidebar = ({ activeView, setActiveView }) => {
     const [chatHistory, setChatHistory] = useState([
@@ -390,18 +402,13 @@ const Sidebar = ({ activeView, setActiveView }) => {
         <div className="p-4 border-t border-gray-200">
           <div className="space-y-1">
             <button 
-              onClick={() => setActiveView('gmail')}
+              onClick={() => setActiveView('integrations')}
               className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg ${
-                activeView === 'gmail' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
+                activeView === 'integrations' ? 'bg-[#F3E7FF] text-gray-900 font-medium' : 'text-gray-700 hover:bg-gray-100'
               }`}
             >
-              <div className="w-5 h-5 flex items-center justify-center">
-                {/* <svg className="w-5 h-5 text-red-500" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-.904.732-1.636 1.636-1.636h3.819v.545L12 10.455l6.545-6.089v-.545h3.819c.904 0 1.636.732 1.636 1.636Z"/>
-                </svg> */}
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/1920px-Gmail_icon_%282020%29.svg.png" alt="Gmail Icon" className="w-12 text-white" />
-              </div>
-              <span>Gmail</span>
+              <Link className="w-5 h-5" />
+              <span>Integrations</span>
             </button>
             <button className="w-full flex items-center space-x-3 px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-lg">
               <Settings className="w-5 h-5" />
@@ -412,6 +419,5 @@ const Sidebar = ({ activeView, setActiveView }) => {
       </div>
     );
   };
-
 
 export default Sidebar;

@@ -2252,6 +2252,135 @@
 
 
 
+// import React, { useState, useEffect } from 'react';
+// import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, FileText, Settings, Link, ArrowLeft, Mail, Phone, MapPin, Calendar, Edit, Trash2, Star, Clock, Mic, Send, MoreHorizontal, AlertCircle, CheckCircle2, Circle, BookOpen, X, Paperclip, Image, MessageCircle } from 'lucide-react';
+// import HomePage from './components/HomePage';
+// import ContactDetail from './components/ContactDetail';
+// import ContactsList from './components/ContactsList';
+// import TasksPage from './components/TaskPage';
+// import NotificationsPage from './components/NotificationsPage';
+// import NotesPage from './components/NotesPage';
+// import Sidebar from './components/Sidebar';
+// import GmailIntegration from './components/GmailIntegration';
+
+// // Main App Component
+// const App = () => {
+//   const [activeView, setActiveView] = useState('home');
+//   const [selectedContact, setSelectedContact] = useState(null);
+//   const [authenticatedEmail, setAuthenticatedEmail] = useState(null);
+
+//   // Load authenticated email from localStorage on app start
+//   useEffect(() => {
+//     const savedEmail = localStorage.getItem('authenticatedEmail');
+//     console.log('App.jsx loading from localStorage:', savedEmail); // Debug log
+//     if (savedEmail) {
+//       setAuthenticatedEmail(savedEmail);
+//       console.log('App.jsx set authenticatedEmail to:', savedEmail); // Debug log
+//     }
+//   }, []);
+
+//   // Handle authentication success
+//   const handleAuthentication = (email) => {
+//     console.log('App.jsx handleAuthentication called with:', email); // Debug log
+//     setAuthenticatedEmail(email);
+//     localStorage.setItem('authenticatedEmail', email);
+//     setActiveView('home'); // Navigate back to home after authentication
+//   };
+
+//   // Handle logout/disconnect
+//   const handleLogout = () => {
+//     setAuthenticatedEmail(null);
+//     localStorage.removeItem('authenticatedEmail');
+//   };
+
+//   const handleContactClick = (contact) => {
+//     setSelectedContact(contact);
+//   };
+
+//   const handleBackToContacts = () => {
+//     setSelectedContact(null);
+//   };
+
+//   const renderMainContent = () => {
+//     if (activeView === 'home') {
+//       console.log('App.jsx rendering HomePage with authenticatedEmail:', authenticatedEmail); // Debug log
+//       return (
+//         <HomePage 
+//           authenticatedEmail={authenticatedEmail}
+//           onGmailSetup={() => setActiveView('gmail')}
+//           onLogout={handleLogout}
+//         />
+//       );
+//     }
+    
+//     if (activeView === 'search') {
+//       console.log('App.jsx rendering search HomePage with authenticatedEmail:', authenticatedEmail); // Debug log
+//       return (
+//         <HomePage 
+//           authenticatedEmail={authenticatedEmail}
+//           onGmailSetup={() => setActiveView('gmail')}
+//           onLogout={handleLogout}
+//         />
+//       );
+//     }
+    
+//     if (activeView === 'contacts') {
+//       if (selectedContact) {
+//         return <ContactDetail contact={selectedContact} onBack={handleBackToContacts} />;
+//       }
+//       return <ContactsList onContactClick={handleContactClick} />;
+//     }
+
+//     if (activeView === 'tasks') {
+//       return <TasksPage />;
+//     }
+
+//     if (activeView === 'notifications') {
+//       return <NotificationsPage />;
+//     }
+
+//     if (activeView === 'notes') {
+//       return <NotesPage />;
+//     }
+
+//     if (activeView === 'gmail') {
+//       return (
+//         <GmailIntegration 
+//           onBack={() => setActiveView('home')} 
+//           onAuthenticated={handleAuthentication}
+//         />
+//       );
+//     }
+    
+//     // Default fallback for other views
+//     return (
+//       <div className="flex-1 flex items-center justify-center bg-gray-50">
+//         <div className="text-center">
+//           <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+//             {activeView.charAt(0).toUpperCase() + activeView.slice(1)}
+//           </h2>
+//           <p className="text-gray-600">This page is coming soon...</p>
+//         </div>
+//       </div>
+//     );
+//   };
+
+//   return (
+//     <div className="flex h-screen bg-white">
+//       <Sidebar 
+//         activeView={activeView} 
+//         setActiveView={setActiveView}
+//         authenticatedEmail={authenticatedEmail}
+//         onLogout={handleLogout}
+//       />
+//       {renderMainContent()}
+//     </div>
+//   );
+// };
+
+// export default App;
+
+
 import React, { useState, useEffect } from 'react';
 import { Search, Plus, Filter, ArrowUpDown, Home, Users, Bell, CheckSquare, FileText, Settings, Link, ArrowLeft, Mail, Phone, MapPin, Calendar, Edit, Trash2, Star, Clock, Mic, Send, MoreHorizontal, AlertCircle, CheckCircle2, Circle, BookOpen, X, Paperclip, Image, MessageCircle } from 'lucide-react';
 import HomePage from './components/HomePage';
@@ -2261,7 +2390,8 @@ import TasksPage from './components/TaskPage';
 import NotificationsPage from './components/NotificationsPage';
 import NotesPage from './components/NotesPage';
 import Sidebar from './components/Sidebar';
-import GmailIntegration from './components/GmailIntegration';
+import IntegrationTabs from './components/IntegrationTabs';
+// import IntegrationTabs from './components/IntegrationTabs';
 
 // Main App Component
 const App = () => {
@@ -2307,7 +2437,7 @@ const App = () => {
       return (
         <HomePage 
           authenticatedEmail={authenticatedEmail}
-          onGmailSetup={() => setActiveView('gmail')}
+          onGmailSetup={() => setActiveView('integrations')}
           onLogout={handleLogout}
         />
       );
@@ -2318,7 +2448,7 @@ const App = () => {
       return (
         <HomePage 
           authenticatedEmail={authenticatedEmail}
-          onGmailSetup={() => setActiveView('gmail')}
+          onGmailSetup={() => setActiveView('integrations')}
           onLogout={handleLogout}
         />
       );
@@ -2343,9 +2473,9 @@ const App = () => {
       return <NotesPage />;
     }
 
-    if (activeView === 'gmail') {
+    if (activeView === 'integrations') {
       return (
-        <GmailIntegration 
+        <IntegrationTabs 
           onBack={() => setActiveView('home')} 
           onAuthenticated={handleAuthentication}
         />
